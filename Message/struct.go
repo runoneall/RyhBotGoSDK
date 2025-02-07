@@ -17,6 +17,14 @@ type SendImageContent struct {
 	Buttons  [][]ButtonItem `json:"buttons"`
 }
 
+type UploadImageResponse struct {
+	Code int64  `json:"code"`
+	Msg  string `json:"msg"`
+	Data struct {
+		ImageKey string `json:"imageKey"`
+	} `json:"data"`
+}
+
 type SendMessage struct {
 	RecvId      string      `json:"recvId"`
 	RecvType    string      `json:"recvType"`
@@ -37,14 +45,6 @@ type SendMessageResponse struct {
 	} `json:"data"`
 }
 
-type UploadImageResponse struct {
-	Code int64  `json:"code"`
-	Msg  string `json:"msg"`
-	Data struct {
-		ImageKey string `json:"imageKey"`
-	} `json:"data"`
-}
-
 type BatchSendMessage struct {
 	RecvIds     []string    `json:"recvIds"`
 	RecvType    string      `json:"recvType"`
@@ -62,5 +62,21 @@ type BatchSendMessageResponse struct {
 			RecvId   string `json:"recvId"`
 			RecvType string `json:"recvType"`
 		} `json:"successList"`
+	} `json:"data"`
+}
+
+type EditMessage struct {
+	MsgId       string      `json:"msgId"`
+	RecvId      string      `json:"recvId"`
+	RecvType    string      `json:"recvType"`
+	ContentType string      `json:"contentType"`
+	Content     interface{} `json:"content"`
+}
+
+type EditMessageResponse struct {
+	Code int64  `json:"code"`
+	Msg  string `json:"msg"`
+	Data struct {
+		SuccessCount int64 `json:"successCount"`
 	} `json:"data"`
 }

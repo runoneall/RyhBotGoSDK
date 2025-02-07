@@ -19,3 +19,9 @@ func ParseBatchSendMessageResponse(body []byte) BatchSendMessageResponse {
 	json.Unmarshal(body, &resp)
 	return resp
 }
+
+func ParseEditMessageResponse(body []byte) EditMessageResponse {
+	var resp EditMessageResponse
+	json.Unmarshal(body, &resp)
+	return resp
+}

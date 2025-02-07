@@ -81,7 +81,7 @@ func SendHtml(recvId string, recvType string, text string, buttons [][]ButtonIte
 	return ParseSendMessageResponse(body)
 }
 
-func BatchSendText(recvIds []string, recvType string, text string, buttons [][]ButtonItem, parentId string) BatchSendMessageResponse {
+func BatchSendText(recvIds []string, recvType string, text string, buttons [][]ButtonItem) BatchSendMessageResponse {
 	m := BatchSendMessage{
 		RecvIds:     recvIds,
 		RecvType:    recvType,
@@ -95,7 +95,7 @@ func BatchSendText(recvIds []string, recvType string, text string, buttons [][]B
 	return ParseBatchSendMessageResponse(body)
 }
 
-func BatchSendMarkdown(recvIds []string, recvType string, text string, buttons [][]ButtonItem, parentId string) BatchSendMessageResponse {
+func BatchSendMarkdown(recvIds []string, recvType string, text string, buttons [][]ButtonItem) BatchSendMessageResponse {
 	m := BatchSendMessage{
 		RecvIds:     recvIds,
 		RecvType:    recvType,
@@ -109,7 +109,7 @@ func BatchSendMarkdown(recvIds []string, recvType string, text string, buttons [
 	return ParseBatchSendMessageResponse(body)
 }
 
-func BatchSendImage(recvIds []string, recvType string, image []byte, buttons [][]ButtonItem, parentId string) BatchSendMessageResponse {
+func BatchSendImage(recvIds []string, recvType string, image []byte, buttons [][]ButtonItem) BatchSendMessageResponse {
 	body, _ := http_imageUpload(imgUploadApi, image)
 	imgUploadResp := ParseImageUploadResponse(body)
 	m := BatchSendMessage{
@@ -125,7 +125,7 @@ func BatchSendImage(recvIds []string, recvType string, image []byte, buttons [][
 	return ParseBatchSendMessageResponse(body)
 }
 
-func BatchSendHtml(recvIds []string, recvType string, text string, buttons [][]ButtonItem, parentId string) BatchSendMessageResponse {
+func BatchSendHtml(recvIds []string, recvType string, text string, buttons [][]ButtonItem) BatchSendMessageResponse {
 	m := BatchSendMessage{
 		RecvIds:     recvIds,
 		RecvType:    recvType,
@@ -137,4 +137,34 @@ func BatchSendHtml(recvIds []string, recvType string, text string, buttons [][]B
 	}
 	body, _ := http_post(msgBatchSendApi, m)
 	return ParseBatchSendMessageResponse(body)
+}
+
+func EditText(msgId string, recvId string, recvType string, text string, buttons [][]ButtonItem) EditMessageResponse {
+	m := EditMessage{
+		MsgId:       msgId,
+		RecvId:      recvId,
+		RecvType:    recvType,
+		ContentType: "text",
+		Content: SendMessageContent{
+			Text:    text,
+			Buttons: buttons,
+		},
+	}
+	body, _ := http_post(msgEditApi, m)
+	return ParseEditMessageResponse(body)
+}
+
+func EditMarkdown(msgId string, recvId string, recvType string, text string, buttons [][]ButtonItem) EditMessageResponse {
+	m := EditMessage{
+		MsgId:       msgId,
+		RecvId:      recvId,
+		RecvType:    recvType,
+		ContentType: "markdown",
+		Content: SendMessageContent{
+			Text:    text,
+			Buttons: buttons,
+		},
+	}
+	body, _ := http_post(msgEditApi, m)
+	return ParseEditMessageResponse(body)
 }
