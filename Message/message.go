@@ -108,3 +108,19 @@ func BatchSendMarkdown(recvIds []string, recvType string, text string, buttons [
 	body, _ := http_post(msgBatchSendApi, m)
 	return ParseBatchSendMessageResponse(body)
 }
+
+func BatchSendImage(recvIds []string, recvType string, image []byte, buttons [][]ButtonItem, parentId string) BatchSendMessageResponse {
+	body, _ := http_imageUpload(imgUploadApi, image)
+	imgUploadResp := ParseImageUploadResponse(body)
+	m := BatchSendMessage{
+		RecvIds:     recvIds,
+		RecvType:    recvType,
+		ContentType: "image",
+		Content: SendImageContent{
+			ImageKey: imgUploadResp.Data.ImageKey,
+			Buttons:  buttons,
+		},
+	}
+	body, _ = http_post(msgBatchSendApi, m)
+	return ParseBatchSendMessageResponse(body)
+}
