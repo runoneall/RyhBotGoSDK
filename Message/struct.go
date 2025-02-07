@@ -80,3 +80,14 @@ type EditMessageResponse struct {
 		SuccessCount int64 `json:"successCount"`
 	} `json:"data"`
 }
+
+type DeleteMessage struct {
+	MsgId    string `json:"msgId"`
+	ChatId   string `json:"chatId"`
+	ChatType string `json:"chatType"`
+}
+
+type DeleteMessageResponse struct {
+	Code int64  `json:"code"`
+	Msg  string `json:"msg"`
+}

@@ -168,3 +168,13 @@ func EditMarkdown(msgId string, recvId string, recvType string, text string, but
 	body, _ := http_post(msgEditApi, m)
 	return ParseEditMessageResponse(body)
 }
+
+func Delete(msgId string, recvId string, recvType string) DeleteMessageResponse {
+	m := DeleteMessage{
+		MsgId:    msgId,
+		ChatId:   recvId,
+		ChatType: recvType,
+	}
+	body, _ := http_post(msgRecallApi, m)
+	return ParseDeleteMessageResponse(body)
+}
