@@ -124,3 +124,17 @@ func BatchSendImage(recvIds []string, recvType string, image []byte, buttons [][
 	body, _ = http_post(msgBatchSendApi, m)
 	return ParseBatchSendMessageResponse(body)
 }
+
+func BatchSendHtml(recvIds []string, recvType string, text string, buttons [][]ButtonItem, parentId string) BatchSendMessageResponse {
+	m := BatchSendMessage{
+		RecvIds:     recvIds,
+		RecvType:    recvType,
+		ContentType: "html",
+		Content: SendMessageContent{
+			Text:    text,
+			Buttons: buttons,
+		},
+	}
+	body, _ := http_post(msgBatchSendApi, m)
+	return ParseBatchSendMessageResponse(body)
+}
