@@ -8,6 +8,7 @@ var msgRecallApi string = msgBaseApi + "recall"
 var msgGetApi string = msgBaseApi + "messages"
 var imgUploadApi string = "https://chat-go.jwzhd.com/open-apis/v1/image/upload"
 var NoButton = make([][]ButtonItem, 0)
+var NoParent = ""
 
 func SetToken(t string) {
 	msgSendApi += "?token=" + t
@@ -85,6 +86,20 @@ func BatchSendText(recvIds []string, recvType string, text string, buttons [][]B
 		RecvIds:     recvIds,
 		RecvType:    recvType,
 		ContentType: "text",
+		Content: SendMessageContent{
+			Text:    text,
+			Buttons: buttons,
+		},
+	}
+	body, _ := http_post(msgBatchSendApi, m)
+	return ParseBatchSendMessageResponse(body)
+}
+
+func BatchSendMarkdown(recvIds []string, recvType string, text string, buttons [][]ButtonItem, parentId string) BatchSendMessageResponse {
+	m := BatchSendMessage{
+		RecvIds:     recvIds,
+		RecvType:    recvType,
+		ContentType: "markdown",
 		Content: SendMessageContent{
 			Text:    text,
 			Buttons: buttons,
