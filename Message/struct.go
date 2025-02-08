@@ -111,3 +111,19 @@ type GetMessageResponse struct {
 		Total int64 `json:"total"`
 	} `json:"data"`
 }
+
+type UserBoard struct {
+	RecvId      string `json:"recvId"`
+	RecvType    string `json:"recvType"`
+	ContentType string `json:"contentType"`
+	Content     string `json:"content"`
+	ExpireTime  int64  `json:"expireTime"`
+}
+
+type UserBoardResponse struct {
+	Code int64  `json:"code"`
+	Msg  string `json:"msg"`
+	Data struct {
+		SuccessCount int64 `json:"successCount"`
+	} `json:"data"`
+}

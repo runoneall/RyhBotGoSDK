@@ -8,9 +8,14 @@ var msgBatchSendApi string = msgBaseApi + "batch_send"
 var msgEditApi string = msgBaseApi + "edit"
 var msgRecallApi string = msgBaseApi + "recall"
 var msgGetApi string = msgBaseApi + "messages"
+var msgUserBoardApi string = msgBaseApi + "board"
+var msgCancelUserBoardApi string = msgBaseApi + "board-dismiss"
+var msgGlobalBoardApi string = msgBaseApi + "board-all"
+var msgCancelGlobalBoardApi string = msgBaseApi + "board-all-dismiss"
 var imgUploadApi string = "https://chat-go.jwzhd.com/open-apis/v1/image/upload"
 var NoButton = make([][]ButtonItem, 0)
 var NoParent = ""
+var NoBoardExpire = 0
 
 func SetToken(t string) {
 	msgSendApi += "?token=" + t
@@ -18,6 +23,10 @@ func SetToken(t string) {
 	msgEditApi += "?token=" + t
 	msgRecallApi += "?token=" + t
 	msgGetApi += "?token=" + t
+	msgUserBoardApi += "?token=" + t
+	msgCancelUserBoardApi += "?token=" + t
+	msgGlobalBoardApi += "?token=" + t
+	msgCancelGlobalBoardApi += "?token=" + t
 	imgUploadApi += "?token=" + t
 }
 
