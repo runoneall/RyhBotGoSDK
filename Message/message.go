@@ -202,8 +202,8 @@ func GetAfterMessage(chatId string, chatType string, msgId string, limit int64) 
 	return ParseGetMessageResponse(body)
 }
 
-func UserTextBoard(recvId string, recvType string, text string, expireTime int64) UserBoardResponse {
-	m := UserBoard{
+func UserTextBoard(recvId string, recvType string, text string, expireTime int64) SetBoardResponse {
+	m := SetUserBoard{
 		RecvId:      recvId,
 		RecvType:    recvType,
 		ContentType: "text",
@@ -211,11 +211,11 @@ func UserTextBoard(recvId string, recvType string, text string, expireTime int64
 		ExpireTime:  expireTime,
 	}
 	body, _ := http_post(msgUserBoardApi, m)
-	return ParseUserBoardResponse(body)
+	return ParseSetBoardResponse(body)
 }
 
-func UserMarkdownBoard(recvId string, recvType string, text string, expireTime int64) UserBoardResponse {
-	m := UserBoard{
+func UserMarkdownBoard(recvId string, recvType string, text string, expireTime int64) SetBoardResponse {
+	m := SetUserBoard{
 		RecvId:      recvId,
 		RecvType:    recvType,
 		ContentType: "markdown",
@@ -223,11 +223,11 @@ func UserMarkdownBoard(recvId string, recvType string, text string, expireTime i
 		ExpireTime:  expireTime,
 	}
 	body, _ := http_post(msgUserBoardApi, m)
-	return ParseUserBoardResponse(body)
+	return ParseSetBoardResponse(body)
 }
 
-func UserHtmlBoard(recvId string, recvType string, text string, expireTime int64) UserBoardResponse {
-	m := UserBoard{
+func UserHtmlBoard(recvId string, recvType string, text string, expireTime int64) SetBoardResponse {
+	m := SetUserBoard{
 		RecvId:      recvId,
 		RecvType:    recvType,
 		ContentType: "html",
@@ -235,5 +235,5 @@ func UserHtmlBoard(recvId string, recvType string, text string, expireTime int64
 		ExpireTime:  expireTime,
 	}
 	body, _ := http_post(msgUserBoardApi, m)
-	return ParseUserBoardResponse(body)
+	return ParseSetBoardResponse(body)
 }

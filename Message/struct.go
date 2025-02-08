@@ -112,7 +112,7 @@ type GetMessageResponse struct {
 	} `json:"data"`
 }
 
-type UserBoard struct {
+type SetUserBoard struct {
 	RecvId      string `json:"recvId"`
 	RecvType    string `json:"recvType"`
 	ContentType string `json:"contentType"`
@@ -120,7 +120,13 @@ type UserBoard struct {
 	ExpireTime  int64  `json:"expireTime"`
 }
 
-type UserBoardResponse struct {
+type SetGlobalBoard struct {
+	ContentType string `json:"contentType"`
+	Content     string `json:"content"`
+	ExpireTime  int64  `json:"expireTime"`
+}
+
+type SetBoardResponse struct {
 	Code int64  `json:"code"`
 	Msg  string `json:"msg"`
 	Data struct {

@@ -38,8 +38,8 @@ func ParseGetMessageResponse(body []byte) GetMessageResponse {
 	return resp
 }
 
-func ParseUserBoardResponse(body []byte) UserBoardResponse {
-	var resp UserBoardResponse
+func ParseSetBoardResponse(body []byte) SetBoardResponse {
+	var resp SetBoardResponse
 	json.Unmarshal(body, &resp)
 	return resp
 }
