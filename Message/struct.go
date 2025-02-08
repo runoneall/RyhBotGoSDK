@@ -127,3 +127,13 @@ type UserBoardResponse struct {
 		SuccessCount int64 `json:"successCount"`
 	} `json:"data"`
 }
+
+type CancelBoard struct {
+	RecvId   string `json:"recvId"`
+	RecvType string `json:"recvType"`
+}
+
+type CancelBoardResponse struct {
+	Code int64  `json:"code"`
+	Msg  string `json:"msg"`
+}

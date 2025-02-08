@@ -13,9 +13,9 @@ var msgCancelUserBoardApi string = msgBaseApi + "board-dismiss"
 var msgGlobalBoardApi string = msgBaseApi + "board-all"
 var msgCancelGlobalBoardApi string = msgBaseApi + "board-all-dismiss"
 var imgUploadApi string = "https://chat-go.jwzhd.com/open-apis/v1/image/upload"
-var NoButton = make([][]ButtonItem, 0)
-var NoParent = ""
-var NoBoardExpire = 0
+var NoButton [][]ButtonItem = make([][]ButtonItem, 0)
+var NoParent string = ""
+var NoBoardExpire int64 = 0
 
 func SetToken(t string) {
 	msgSendApi += "?token=" + t
@@ -200,4 +200,40 @@ func GetAfterMessage(chatId string, chatType string, msgId string, limit int64) 
 	url := fmt.Sprintf("%s&chat-id=%s&chat-type=%s&message-id=%s&after=%d", msgGetApi, chatId, chatType, msgId, limit-1)
 	body, _ := http_get(url)
 	return ParseGetMessageResponse(body)
+}
+
+func UserTextBoard(recvId string, recvType string, text string, expireTime int64) UserBoardResponse {
+	m := UserBoard{
+		RecvId:      recvId,
+		RecvType:    recvType,
+		ContentType: "text",
+		Content:     text,
+		ExpireTime:  expireTime,
+	}
+	body, _ := http_post(msgUserBoardApi, m)
+	return ParseUserBoardResponse(body)
+}
+
+func UserMarkdownBoard(recvId string, recvType string, text string, expireTime int64) UserBoardResponse {
+	m := UserBoard{
+		RecvId:      recvId,
+		RecvType:    recvType,
+		ContentType: "markdown",
+		Content:     text,
+		ExpireTime:  expireTime,
+	}
+	body, _ := http_post(msgUserBoardApi, m)
+	return ParseUserBoardResponse(body)
+}
+
+func UserHtmlBoard(recvId string, recvType string, text string, expireTime int64) UserBoardResponse {
+	m := UserBoard{
+		RecvId:      recvId,
+		RecvType:    recvType,
+		ContentType: "html",
+		Content:     text,
+		ExpireTime:  expireTime,
+	}
+	body, _ := http_post(msgUserBoardApi, m)
+	return ParseUserBoardResponse(body)
 }

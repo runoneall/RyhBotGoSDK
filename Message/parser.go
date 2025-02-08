@@ -37,3 +37,9 @@ func ParseGetMessageResponse(body []byte) GetMessageResponse {
 	json.Unmarshal(body, &resp)
 	return resp
 }
+
+func ParseUserBoardResponse(body []byte) UserBoardResponse {
+	var resp UserBoardResponse
+	json.Unmarshal(body, &resp)
+	return resp
+}
