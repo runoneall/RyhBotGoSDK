@@ -43,3 +43,9 @@ func ParseSetBoardResponse(body []byte) SetBoardResponse {
 	json.Unmarshal(body, &resp)
 	return resp
 }
+
+func ParseCancelBoardResponse(body []byte) CancelBoardResponse {
+	var resp CancelBoardResponse
+	json.Unmarshal(body, &resp)
+	return resp
+}

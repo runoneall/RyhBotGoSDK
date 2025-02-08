@@ -237,3 +237,47 @@ func UserHtmlBoard(recvId string, recvType string, text string, expireTime int64
 	body, _ := http_post(msgUserBoardApi, m)
 	return ParseSetBoardResponse(body)
 }
+
+func GlobalTextBoard(content string, expireTime int64) SetBoardResponse {
+	m := SetGlobalBoard{
+		ContentType: "text",
+		Content:     content,
+		ExpireTime:  expireTime,
+	}
+	body, _ := http_post(msgGlobalBoardApi, m)
+	return ParseSetBoardResponse(body)
+}
+
+func GlobalMarkdownBoard(content string, expireTime int64) SetBoardResponse {
+	m := SetGlobalBoard{
+		ContentType: "markdown",
+		Content:     content,
+		ExpireTime:  expireTime,
+	}
+	body, _ := http_post(msgGlobalBoardApi, m)
+	return ParseSetBoardResponse(body)
+}
+
+func GlobalHtmlBoard(content string, expireTime int64) SetBoardResponse {
+	m := SetGlobalBoard{
+		ContentType: "html",
+		Content:     content,
+		ExpireTime:  expireTime,
+	}
+	body, _ := http_post(msgGlobalBoardApi, m)
+	return ParseSetBoardResponse(body)
+}
+
+func CancelUserBoard(recvId string, recvType string) CancelBoardResponse {
+	m := CancelBoard{
+		RecvId:   recvId,
+		RecvType: recvType,
+	}
+	body, _ := http_post(msgCancelUserBoardApi, m)
+	return ParseCancelBoardResponse(body)
+}
+
+func CancelGlobalBoard() CancelBoardResponse {
+	body, _ := http_post(msgCancelGlobalBoardApi, CancelBoard{})
+	return ParseCancelBoardResponse(body)
+}
