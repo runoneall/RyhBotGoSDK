@@ -31,3 +31,9 @@ func ParseDeleteMessageResponse(body []byte) DeleteMessageResponse {
 	json.Unmarshal(body, &resp)
 	return resp
 }
+
+func ParseGetMessageResponse(body []byte) GetMessageResponse {
+	var resp GetMessageResponse
+	json.Unmarshal(body, &resp)
+	return resp
+}

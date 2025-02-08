@@ -91,3 +91,23 @@ type DeleteMessageResponse struct {
 	Code int64  `json:"code"`
 	Msg  string `json:"msg"`
 }
+
+type GetMessageResponse struct {
+	Code int64  `json:"code"`
+	Msg  string `json:"msg"`
+	Data struct {
+		List []struct {
+			MsgId          string                 `json:"msgId"`
+			ParentId       string                 `json:"parentId"`
+			SenderId       string                 `json:"senderId"`
+			SenderType     string                 `json:"senderType"`
+			SenderNickname string                 `json:"senderNickname"`
+			ContentType    string                 `json:"contentType"`
+			Content        map[string]interface{} `json:"content"`
+			SendTime       int64                  `json:"sendTime"`
+			CommandName    string                 `json:"commandName"`
+			CommandId      int64                  `json:"commandId"`
+		} `json:"list"`
+		Total int64 `json:"total"`
+	} `json:"data"`
+}

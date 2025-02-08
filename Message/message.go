@@ -1,5 +1,7 @@
 package message
 
+import "fmt"
+
 var msgBaseApi string = "https://chat-go.jwzhd.com/open-apis/v1/bot/"
 var msgSendApi string = msgBaseApi + "send"
 var msgBatchSendApi string = msgBaseApi + "batch_send"
@@ -177,4 +179,10 @@ func Delete(msgId string, recvId string, recvType string) DeleteMessageResponse 
 	}
 	body, _ := http_post(msgRecallApi, m)
 	return ParseDeleteMessageResponse(body)
+}
+
+func GetBeforeMessage(chatId string, chatType string, limit int64) GetMessageResponse {
+	url := fmt.Sprintf("%s&chat-id=%s&chat-type=%s&before=%d", msgGetApi, chatId, chatType, limit)
+	body, _ := http_get(url)
+	return ParseGetMessageResponse(body)
 }
