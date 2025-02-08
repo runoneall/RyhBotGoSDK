@@ -186,3 +186,9 @@ func GetBeforeMessage(chatId string, chatType string, limit int64) GetMessageRes
 	body, _ := http_get(url)
 	return ParseGetMessageResponse(body)
 }
+
+func GetAfterMessage(chatId string, chatType string, msgId string, limit int64) GetMessageResponse {
+	url := fmt.Sprintf("%s&chat-id=%s&chat-type=%s&message-id=%s&after=%d", msgGetApi, chatId, chatType, msgId, limit-1)
+	body, _ := http_get(url)
+	return ParseGetMessageResponse(body)
+}
