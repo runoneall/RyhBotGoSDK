@@ -99,9 +99,6 @@ func (sh *ServerHandler) Start(port int) {
 		case "bot.unfollowed":
 			yh_event := ParseYunhuMessageEventBotFollow(yh.Event)
 			sh.BotUnfollowMessage(yh_event)
-		case "bot.setting":
-			yh_event := ParseYunhuMessageEventBotSetting(yh.Event)
-			sh.BotSettingMessage(yh_event)
 		case "group.join":
 			yh_event := ParseYunhuMessageEventGroupJoin(yh.Event)
 			sh.GroupJoinMessage(yh_event)
@@ -111,6 +108,9 @@ func (sh *ServerHandler) Start(port int) {
 		case "button.report.inline":
 			yh_event := ParseYunhuMessageEventButtonReport(yh.Event)
 			sh.ButtonReportMessage(yh_event)
+		case "bot.setting":
+			yh_event := ParseYunhuMessageEventBotSetting(yh.Event)
+			sh.BotSettingMessage(yh_event)
 		}
 		sh.AllTypeMessage(yh.Event)
 
