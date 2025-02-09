@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func PreCallDefaultHandler(data interface{}) interface{} {
+func PreCallDefaultHandler(data YunhuMessage) YunhuMessage {
 	return data
 }
 func MessageDefaultHandler(data interface{}) {}
@@ -25,7 +25,7 @@ func (sh *ServerHandler) Init() {
 	sh.AllTypeMessage = MessageDefaultHandler
 }
 
-func (sh *ServerHandler) SetPreCallHandler(handler func(data interface{}) interface{}) {
+func (sh *ServerHandler) SetPreCallHandler(handler func(data YunhuMessage) YunhuMessage) {
 	sh.PreCall = handler
 }
 
@@ -57,6 +57,10 @@ func (sh *ServerHandler) SetButtonReportMessageHandler(handler func(data interfa
 	sh.ButtonReportMessage = handler
 }
 
+func (sh *ServerHandler) SetBotSettingMessageHandler(handler func(data interface{})) {
+	sh.BotSettingMessage = handler
+}
+
 func (sh *ServerHandler) SetAllTypeMessageHandler(handler func(data interface{})) {
 	sh.AllTypeMessage = handler
 }
@@ -78,6 +82,36 @@ func (sh *ServerHandler) Start(port int) {
 
 		fmt.Printf("* %s POST %s ON %s\n", req.RemoteAddr, req.URL.Path, time.Now().Format("2006-01-02 15:04:05"))
 		WriteRequestToFile(req_body)
+
+		yh := sh.PreCall(ParseYunhuMessage(req_body))
+		yh_header := yh.Header
+		switch yh_header.EventType {
+		case "message.receive.normal":
+			yh_event := ParseYunhuMessageEventNormal(yh.Event)
+			sh.NormalMessage(yh_event)
+		case "message.receive.instruction":
+			yh_event := ParseYunhuMessageEventNormal(yh.Event)
+			sh.CommandMessage(yh_event)
+		case "bot.followed":
+			yh_event := ParseYunhuMessageEventBotFollow(yh.Event)
+			sh.BotFollowMessage(yh_event)
+		case "bot.unfollowed":
+			yh_event := ParseYunhuMessageEventBotFollow(yh.Event)
+			sh.BotUnfollowMessage(yh_event)
+		case "bot.setting":
+			yh_event := ParseYunhuMessageEventBotSetting(yh.Event)
+			sh.BotSettingMessage(yh_event)
+		case "group.join":
+			yh_event := ParseYunhuMessageEventGroupJoin(yh.Event)
+			sh.GroupJoinMessage(yh_event)
+		case "group.leave":
+			yh_event := ParseYunhuMessageEventGroupLeave(yh.Event)
+			sh.GroupLeaveMessage(yh_event)
+		case "button.report.inline":
+			yh_event := ParseYunhuMessageEventButtonReport(yh.Event)
+			sh.ButtonReportMessage(yh_event)
+		}
+		sh.AllTypeMessage(yh.Event)
 
 	}
 	http.HandleFunc("/", servYunhuHandler)
