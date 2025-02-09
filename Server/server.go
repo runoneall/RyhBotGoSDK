@@ -85,6 +85,7 @@ func (sh *ServerHandler) Start(port int) {
 
 		yh := sh.PreCall(ParseYunhuMessage(req_body))
 		yh_header := yh.Header
+
 		switch yh_header.EventType {
 		case "message.receive.normal":
 			yh_event := ParseYunhuMessageEventNormal(yh.Event)
