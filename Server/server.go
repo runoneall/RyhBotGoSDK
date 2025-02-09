@@ -1,5 +1,11 @@
 package server
 
+import (
+	"fmt"
+	"io"
+	"net/http"
+)
+
 func PreCallDefaultHandler(data interface{}) interface{} {
 	return data
 }
@@ -51,4 +57,28 @@ func (sh *ServerHandler) SetButtonReportMessageHandler(handler func(data interfa
 
 func (sh *ServerHandler) SetAllTypeMessageHandler(handler func(data interface{})) {
 	sh.AllTypeMessage = handler
+}
+
+func (sh *ServerHandler) Start(port int) {
+	servYunhuHandler := func(resp http.ResponseWriter, req *http.Request) {
+
+		if req.Method != http.MethodPost {
+			http.Error(resp, "Method Not Allowed", http.StatusMethodNotAllowed)
+			return
+		}
+
+		req_body, err := io.ReadAll(req.Body)
+		if err != nil {
+			http.Error(resp, "Internal Server Error", http.StatusInternalServerError)
+			return
+		}
+		defer req.Body.Close()
+
+		WriteRequestToFile(req_body)
+
+	}
+	http.HandleFunc("/", servYunhuHandler)
+	portstring := fmt.Sprintf(":%d", port)
+	fmt.Printf("* Starting server on %s\n", portstring)
+	http.ListenAndServe(portstring, nil)
 }
