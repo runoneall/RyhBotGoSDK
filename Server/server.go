@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"time"
 )
 
 func PreCallDefaultHandler(data interface{}) interface{} {
@@ -20,6 +21,7 @@ func (sh *ServerHandler) Init() {
 	sh.GroupJoinMessage = MessageDefaultHandler
 	sh.GroupLeaveMessage = MessageDefaultHandler
 	sh.ButtonReportMessage = MessageDefaultHandler
+	sh.BotSettingMessage = MessageDefaultHandler
 	sh.AllTypeMessage = MessageDefaultHandler
 }
 
@@ -74,6 +76,7 @@ func (sh *ServerHandler) Start(port int) {
 		}
 		defer req.Body.Close()
 
+		fmt.Printf("* %s POST %s ON %s\n", req.RemoteAddr, req.URL.Path, time.Now().Format("2006-01-02 15:04:05"))
 		WriteRequestToFile(req_body)
 
 	}
