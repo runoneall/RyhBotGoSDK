@@ -10,54 +10,61 @@ import (
 func PreCallDefaultHandler(data YunhuMessage) YunhuMessage {
 	return data
 }
-func MessageDefaultHandler(data interface{}) {}
+func MessageNormalDefaultHandler(data YunhuMessageEventNormal)             {}
+func MessageBotFollowDefaultHandler(data YunhuMessageEventBotFollow)       {}
+func MessageBotUnfollowDefaultHandler(data YunhuMessageEventBotUnfollow)   {}
+func MessageGroupJoinDefaultHandler(data YunhuMessageEventGroupJoin)       {}
+func MessageGroupLeaveDefaultHandler(data YunhuMessageEventGroupLeave)     {}
+func MessageButtonReportDefaultHandler(data YunhuMessageEventButtonReport) {}
+func MessageBotSettingDefaultHandler(data YunhuMessageEventBotSetting)     {}
+func MessageAllTypeDefaultHandler(data interface{})                        {}
 
 func (sh *ServerHandler) Init() {
 	sh.PreCall = PreCallDefaultHandler
-	sh.NormalMessage = MessageDefaultHandler
-	sh.CommandMessage = MessageDefaultHandler
-	sh.BotFollowMessage = MessageDefaultHandler
-	sh.BotUnfollowMessage = MessageDefaultHandler
-	sh.GroupJoinMessage = MessageDefaultHandler
-	sh.GroupLeaveMessage = MessageDefaultHandler
-	sh.ButtonReportMessage = MessageDefaultHandler
-	sh.BotSettingMessage = MessageDefaultHandler
-	sh.AllTypeMessage = MessageDefaultHandler
+	sh.NormalMessage = MessageNormalDefaultHandler
+	sh.CommandMessage = MessageNormalDefaultHandler
+	sh.BotFollowMessage = MessageBotFollowDefaultHandler
+	sh.BotUnfollowMessage = MessageBotUnfollowDefaultHandler
+	sh.GroupJoinMessage = MessageGroupJoinDefaultHandler
+	sh.GroupLeaveMessage = MessageGroupLeaveDefaultHandler
+	sh.ButtonReportMessage = MessageButtonReportDefaultHandler
+	sh.BotSettingMessage = MessageBotSettingDefaultHandler
+	sh.AllTypeMessage = MessageAllTypeDefaultHandler
 }
 
 func (sh *ServerHandler) SetPreCallHandler(handler func(data YunhuMessage) YunhuMessage) {
 	sh.PreCall = handler
 }
 
-func (sh *ServerHandler) SetNormalMessageHandler(handler func(data interface{})) {
+func (sh *ServerHandler) SetNormalMessageHandler(handler func(data YunhuMessageEventNormal)) {
 	sh.NormalMessage = handler
 }
 
-func (sh *ServerHandler) SetCommandMessageHandler(handler func(data interface{})) {
+func (sh *ServerHandler) SetCommandMessageHandler(handler func(data YunhuMessageEventNormal)) {
 	sh.CommandMessage = handler
 }
 
-func (sh *ServerHandler) SetBotFollowMessageHandler(handler func(data interface{})) {
+func (sh *ServerHandler) SetBotFollowMessageHandler(handler func(data YunhuMessageEventBotFollow)) {
 	sh.BotFollowMessage = handler
 }
 
-func (sh *ServerHandler) SetBotUnfollowMessageHandler(handler func(data interface{})) {
+func (sh *ServerHandler) SetBotUnfollowMessageHandler(handler func(data YunhuMessageEventBotUnfollow)) {
 	sh.BotUnfollowMessage = handler
 }
 
-func (sh *ServerHandler) SetGroupJoinMessageHandler(handler func(data interface{})) {
+func (sh *ServerHandler) SetGroupJoinMessageHandler(handler func(data YunhuMessageEventGroupJoin)) {
 	sh.GroupJoinMessage = handler
 }
 
-func (sh *ServerHandler) SetGroupLeaveMessageHandler(handler func(data interface{})) {
+func (sh *ServerHandler) SetGroupLeaveMessageHandler(handler func(data YunhuMessageEventGroupLeave)) {
 	sh.GroupLeaveMessage = handler
 }
 
-func (sh *ServerHandler) SetButtonReportMessageHandler(handler func(data interface{})) {
+func (sh *ServerHandler) SetButtonReportMessageHandler(handler func(data YunhuMessageEventButtonReport)) {
 	sh.ButtonReportMessage = handler
 }
 
-func (sh *ServerHandler) SetBotSettingMessageHandler(handler func(data interface{})) {
+func (sh *ServerHandler) SetBotSettingMessageHandler(handler func(data YunhuMessageEventBotSetting)) {
 	sh.BotSettingMessage = handler
 }
 
@@ -97,7 +104,7 @@ func (sh *ServerHandler) Start(port int) {
 			yh_event := ParseYunhuMessageEventBotFollow(yh.Event)
 			sh.BotFollowMessage(yh_event)
 		case "bot.unfollowed":
-			yh_event := ParseYunhuMessageEventBotFollow(yh.Event)
+			yh_event := ParseYunhuMessageEventBotUnfollow(yh.Event)
 			sh.BotUnfollowMessage(yh_event)
 		case "group.join":
 			yh_event := ParseYunhuMessageEventGroupJoin(yh.Event)

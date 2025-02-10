@@ -2,14 +2,14 @@ package server
 
 type ServerHandler struct {
 	PreCall             func(data YunhuMessage) YunhuMessage
-	NormalMessage       func(data interface{})
-	CommandMessage      func(data interface{})
-	BotFollowMessage    func(data interface{})
-	BotUnfollowMessage  func(data interface{})
-	GroupJoinMessage    func(data interface{})
-	GroupLeaveMessage   func(data interface{})
-	ButtonReportMessage func(data interface{})
-	BotSettingMessage   func(data interface{})
+	NormalMessage       func(data YunhuMessageEventNormal)
+	CommandMessage      func(data YunhuMessageEventNormal)
+	BotFollowMessage    func(data YunhuMessageEventBotFollow)
+	BotUnfollowMessage  func(data YunhuMessageEventBotUnfollow)
+	GroupJoinMessage    func(data YunhuMessageEventGroupJoin)
+	GroupLeaveMessage   func(data YunhuMessageEventGroupLeave)
+	ButtonReportMessage func(data YunhuMessageEventButtonReport)
+	BotSettingMessage   func(data YunhuMessageEventBotSetting)
 	AllTypeMessage      func(data interface{})
 }
 
