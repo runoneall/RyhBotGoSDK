@@ -32,46 +32,6 @@ func (sh *ServerHandler) Init() {
 	sh.AllTypeMessage = MessageAllTypeDefaultHandler
 }
 
-func (sh *ServerHandler) SetPreCallHandler(handler func(data YunhuMessage) YunhuMessage) {
-	sh.PreCall = handler
-}
-
-func (sh *ServerHandler) SetNormalMessageHandler(handler func(data YunhuMessageEventNormal)) {
-	sh.NormalMessage = handler
-}
-
-func (sh *ServerHandler) SetCommandMessageHandler(handler func(data YunhuMessageEventNormal)) {
-	sh.CommandMessage = handler
-}
-
-func (sh *ServerHandler) SetBotFollowMessageHandler(handler func(data YunhuMessageEventBotFollow)) {
-	sh.BotFollowMessage = handler
-}
-
-func (sh *ServerHandler) SetBotUnfollowMessageHandler(handler func(data YunhuMessageEventBotUnfollow)) {
-	sh.BotUnfollowMessage = handler
-}
-
-func (sh *ServerHandler) SetGroupJoinMessageHandler(handler func(data YunhuMessageEventGroupJoin)) {
-	sh.GroupJoinMessage = handler
-}
-
-func (sh *ServerHandler) SetGroupLeaveMessageHandler(handler func(data YunhuMessageEventGroupLeave)) {
-	sh.GroupLeaveMessage = handler
-}
-
-func (sh *ServerHandler) SetButtonReportMessageHandler(handler func(data YunhuMessageEventButtonReport)) {
-	sh.ButtonReportMessage = handler
-}
-
-func (sh *ServerHandler) SetBotSettingMessageHandler(handler func(data YunhuMessageEventBotSetting)) {
-	sh.BotSettingMessage = handler
-}
-
-func (sh *ServerHandler) SetAllTypeMessageHandler(handler func(data interface{})) {
-	sh.AllTypeMessage = handler
-}
-
 func (sh *ServerHandler) Start(port int) {
 	servYunhuHandler := func(resp http.ResponseWriter, req *http.Request) {
 
