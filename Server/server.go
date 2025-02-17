@@ -33,7 +33,7 @@ func (sh *ServerHandler) Init() {
 }
 
 func (sh *ServerHandler) Start(port int) {
-	servYunhuHandler := func(resp http.ResponseWriter, req *http.Request) {
+	http.HandleFunc("/", func(resp http.ResponseWriter, req *http.Request) {
 
 		if req.Method != http.MethodPost {
 			http.Error(resp, "Method Not Allowed", http.StatusMethodNotAllowed)
@@ -81,8 +81,7 @@ func (sh *ServerHandler) Start(port int) {
 		}
 		sh.AllTypeMessage(yh.Event)
 
-	}
-	http.HandleFunc("/", servYunhuHandler)
+	})
 	portstring := fmt.Sprintf(":%d", port)
 	fmt.Printf("* Starting server on %s\n", portstring)
 	http.ListenAndServe(portstring, nil)
